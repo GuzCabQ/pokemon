@@ -54,22 +54,26 @@ class _ListPokemonsViewState extends State<ListPokemonsView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Visibility(
-              visible: pokemons.isNotEmpty,
-              child: Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: pokemons.length,
-                  itemBuilder: (context, index) {
-                    final pokemon = pokemons[index];
-                    return _ListTilePokemon(
-                      isSelected: selectedPokemons.contains(pokemon),
-                      pokemon: pokemon,
-                    );
-                  },
-                ),
-              ),
-            ),
+            status == StatusPokemon.error
+                ? const Center(
+                    child: Text('Ocurrió un error'),
+                  )
+                : Visibility(
+                    visible: pokemons.isNotEmpty,
+                    child: Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: pokemons.length,
+                        itemBuilder: (context, index) {
+                          final pokemon = pokemons[index];
+                          return _ListTilePokemon(
+                            isSelected: selectedPokemons.contains(pokemon),
+                            pokemon: pokemon,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
             Visibility(
                 visible: status == StatusPokemon.loading,
                 child: const CircularProgressIndicator())
